@@ -2,11 +2,11 @@
     <header :class="modeSwitch">
         <div id="text_logo" :class="modeSwitch">WasaTeam TestDemo</div>
         <div id="header_link" :class="modeSwitch">
-            <router-link to='/'>linkA</router-link>
-            <router-link to='/'>linkB</router-link>
-            <router-link to='/'>linkC</router-link>
+            <router-link to='/'>首頁</router-link>
+            <router-link to='/pageA'>分頁A</router-link>
+            <router-link to='/pageB'>分頁B</router-link>
             <div id="mode_switch">
-                <div id="switch_outer" @click="nightMode = !nightMode" :class="modeSwitch">
+                <div id="switch_outer" @click="switchMode" :class="modeSwitch">
                     <div id="switch" :class="modeSwitch"></div>
                 </div>
                 &nbsp;夜間模式
@@ -16,24 +16,25 @@
 </template>
 
 <script>
-import $ from 'jquery';
-
 export default {
     name: 'headerCom',
     data(){
         return{
-            switchOn: false,
-            nightMode: false,   // 暫時寫的，之後要改成全域資料
+            
         }
     },
     computed: {
+        nightMode(){
+            return this.$store.state.nightMode;
+        },
         modeSwitch(){
-            $('#header_link').children('a').toggleClass('-bright').toggleClass('-dark');
             return this.nightMode ? '-dark' : '-bright';
         },
     },
-    mounted(){
-        $('#header_link').children('a').addClass('-bright');
+    methods: {
+        switchMode(){
+            this.$store.commit('reverseMode');
+        },
     },
 };
 </script>
@@ -45,6 +46,7 @@ export default {
         display: flex;
         justify-content: space-between;
         padding: 10px 20px;
+        height: 80px;
 
         #text_logo{
             font-size: 42px;
@@ -74,24 +76,24 @@ export default {
                     font-weight: bold;
                 }
             }
-            a.-bright{
-                color: $brightText;
-            }
-            a.-dark{
-                color: $darkText;
-            }
             a.-on{
                 text-decoration: underline;
             }
         }
+        #header_link.-bright a{
+                color: $brightText;
+            }
+        #header_link.-dark a{
+            color: $darkText;
+        }
     }
     header.-bright{
         color: $brightText;
-        background-color: $brightBG;
+        background-color: $brightHeader;
     }
     header.-dark{
         color: $darkText;
-        background-color: $darkBG;
+        background-color: $darkHeader;
     }
 
     #mode_switch{

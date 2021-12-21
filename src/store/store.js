@@ -1,8 +1,14 @@
 import { createStore } from "vuex";
 
 export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+    state: {
+        nightMode: false,
+    },
+    mutations: {
+        reverseMode(state){
+        state.nightMode = !state.nightMode;
+        },
+    },
+    actions: {},
+    modules: {},
 });

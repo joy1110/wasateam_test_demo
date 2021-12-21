@@ -2,16 +2,15 @@
 
     <header-com />
 
-    <div id="home" :class="modeSwitch">
-        <div id="select_area">
-            <h2 :class="modeSwitch">查看詳細資料</h2>
+    <div id="page_a" :class="modeSwitch">
+        <div id="input_area">
+            <h2 :class="modeSwitch">選擇年齡區間：</h2>
             <custom-input :sendToInput='sendToInput' @getFromInput='getFromInput'/>
         </div>
-        <p id="data_detail" v-show="dataFromInput > -1" :class="modeSwitch">
-            姓名：{{selectData.name}}<br>
-            居住地：{{selectData.city}}<br>
-            年齡：{{selectData.age}}
-        </p>
+
+        <ol>
+            <li :class="modeSwitch" v-for='(val) in apiDataFiltered' :key="val">{{val}}</li>
+        </ol>
     </div>
 </template>
 
@@ -21,12 +20,12 @@ import customInput from '/src/components/customInput.vue';
 import $ from 'jquery';
 
 export default {
-    name: "Home",
+    name: "pageA",
     data(){
         return {
-            inputType: 'select',
+            inputType: 'radio',
             apiData: [],
-            dataFromInput: -1,
+            apiDataFiltered: [],
         }
     },
     components: {
@@ -35,7 +34,18 @@ export default {
     },
     methods: {
         getFromInput(index){
-            this.dataFromInput = index;
+            switch(index){
+                case 0:
+                    this.apiDataFiltered = this.apiData.filter(item => item.age <= 18).map(item => item.name);
+                    break;
+                case 1:
+                    this.apiDataFiltered = this.apiData.filter(item => item.age >= 18 && item.age <= 30).map(item => item.name);
+                    break;
+                case 2:
+                    this.apiDataFiltered = this.apiData.filter(item => item.age >= 30).map(item => item.name);
+                    break;
+            }
+
         },
     },
     computed: {
@@ -51,18 +61,16 @@ export default {
                 data: this.apiData,
             };
         },
-        selectData(){
-            return this.dataFromInput > -1 ? this.apiData[this.dataFromInput] : {name: '', city: '', age: ''};
-        },
     },
     mounted(){
+        console.log('test');
         $.ajax({
             url: 'https://mocki.io/v1/2c0ceda2-9953-4c6c-b7d3-fb839fa0065b',
             method: 'GET',
             dataType: 'json',
             context: this,
             success(res){
-                // console.log(res);
+                console.log(res);
                 this.apiData = res;
             },
         });
@@ -73,7 +81,7 @@ export default {
 <style lang='scss' scoped>
 @import '/src/assets/scss/variable.scss';
 
-    #home{
+    #page_a{
         width: 100vw;
         min-height: calc(100vh - 80px);
         padding: 50px 30px;
@@ -83,24 +91,35 @@ export default {
             font-size: 32px;
         }
 
-        p{
-            margin: 30px 0;
-            font-size: 28px;
-            line-height: 48px;
+        ol{
+            display: inline-block;
+            padding: 0;
+            margin-top: 30px;
+            
+            li{
+                font-size: 24px;
+                padding: 5px 0;
+            }
+            li.-bright{
+                color: $brightText;
+            }
+            li.-dark{
+                color: $darkText;
+            }
         }
-
-        h2.-bright, p.-bright{
+        
+        h2.-bright{
             color: $brightText;
         }
-        h2.-dark, p.-dark{
+        h2.-dark{
             color: $darkText;
         }
 
     }
-    #home.-bright{
+    #page_a.-bright{
         background-color: $brightBG;
     }
-    #home.-dark{
+    #page_a.-dark{
         background-color: $darkBG;
     }
 </style>
