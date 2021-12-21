@@ -83,8 +83,8 @@ export default {
 
     #page_a{
         width: 100vw;
-        min-height: calc(100vh - 80px);
-        padding: 50px 30px;
+        min-height: 100vh;
+        padding: 130px 30px 50px;
 
         h2{
             margin: 0 0 20px 0;

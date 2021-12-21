@@ -47,6 +47,9 @@ export default {
         justify-content: space-between;
         padding: 10px 20px;
         height: 80px;
+        position: fixed;
+        top: 0;
+        width: 100%;
 
         #text_logo{
             font-size: 42px;

@@ -4,7 +4,7 @@
 
     <div id="home" :class="modeSwitch">
         <div id="select_area">
-            <h2 :class="modeSwitch">查看詳細資料</h2>
+            <h2 :class="modeSwitch">查詢使用者資料</h2>
             <custom-input :sendToInput='sendToInput' @getFromInput='getFromInput'/>
         </div>
         <p id="data_detail" v-show="dataFromInput > -1" :class="modeSwitch">
@@ -75,8 +75,8 @@ export default {
 
     #home{
         width: 100vw;
-        min-height: calc(100vh - 80px);
-        padding: 50px 30px;
+        min-height: 100vh;
+        padding: 130px 30px 50px;
 
         h2{
             margin: 0 0 20px 0;

@@ -79,9 +79,9 @@ export default {
 
     #page_b{
         width: 100vw;
-        min-height: calc(100vh - 80px);
+        min-height: 100vh;
 
-        padding: 50px 30px;
+        padding: 130px 30px 50px;
 
         #input_area{
             display: flex;

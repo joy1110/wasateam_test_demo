@@ -24,7 +24,7 @@
     <label for='30_' v-if="sendToInput.inputType === 'radio'" :class="modeSwitch">30歲以上</label>
 
     <select v-if="sendToInput.inputType === 'select'" v-model="selectedValue" @change="selectSendOut">
-        <option value='noselect' disabled>選擇人名</option>
+        <option value='noselect' disabled>選擇姓名</option>
         <option v-for='(val, index) in sendToInput.data' :value='val.name' :key="index">{{val.name}}</option>
     </select>
 </template>

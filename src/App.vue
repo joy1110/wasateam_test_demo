@@ -1,11 +1,23 @@
 <template>
-    <!-- <div id="nav">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link>
-    </div> -->
+    <metainfo>
+        <template v-slot:title="{ content }">{{ content ? `${content} | WasaTeam TestDemo` : `WasaTeam TestDemo` }}</template>
+    </metainfo>
 
     <router-view />
 </template>
+
+<script>
+import { useMeta } from 'vue-meta';
+
+export default {
+    setup () {
+        useMeta({
+            title: '首頁',
+            htmlAttrs: { lang: 'zh-TW'}
+        })
+    }
+}
+</script>
 
 <style lang="scss">
     #app {
